@@ -1,0 +1,19 @@
+{
+    "name": "Sample",
+    "version ": "1.0.0",
+    "keywords": "Arduino, Library",
+    "description": "Your library description",
+    "repository": {
+        "type": "git",
+        "url": "repo_url"
+    },
+    "authors": [
+        {
+            "name": "author",
+            "email": "author_email",
+            "maintainer": true
+        }
+    ],
+    "frameworks": "arduino",
+    "platforms": ""
+}

@@ -1,0 +1,5 @@
+Sample  KEYWORD1
+
+test    KEYWORD2
+begin    KEYWORD2
+update    KEYWORD2
