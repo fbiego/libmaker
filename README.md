@@ -9,41 +9,48 @@ Simply run the script and provide your desired library name. Additionally, you c
 
 `python libmaker.py Name`
 
->|--Name
->|  |- Name.h
->|  |- Name.cpp
+```
+|--Name
+|  |- Name.h
+|  |- Name.cpp
+```
 
 `python libmaker.py Name --arduino`
 
->|--Name
->|  |--example
->|  |  |--example
->|  |     |- example.ino
->|  |- library.json
->|  |- library.properties
->|  |- keywords.txt
->|  |- Name.h
->|  |- Name.cpp
+```
+|--Name
+|  |--example
+|  |  |--name
+|  |     |- name.ino
+|  |- library.json
+|  |- library.properties
+|  |- keywords.txt
+|  |- Name.h
+|  |- Name.cpp
+```
 
 `python libmaker.py Name --src`
 
->|--Name
->|  |--src
->|  |  |- Name.h
->|  |  |- Name.cpp
+```
+|--Name
+|  |--src
+|  |  |- Name.h
+|  |  |- Name.cpp
+```
 
 `python libmaker.py Name --arduino --src`
 
->|--Name
->|  |--example
->|  |  |--example
->|  |     |- example.ino
->|  |- library.json
->|  |- library.properties
->|  |- keywords.txt
->|  |--src
->|  |  |- Name.h
->|  |  |- Name.cpp
-
+```
+|--Name
+|  |--example
+|  |  |--name
+|  |     |- name.ino
+|  |- library.json
+|  |- library.properties
+|  |- keywords.txt
+|  |--src
+|  |  |- Name.h
+|  |  |- Name.cpp
+```
 
 
