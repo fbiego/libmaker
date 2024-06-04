@@ -149,19 +149,51 @@ void loop() {
 }
 '''
 
+platformio = '''
+; PlatformIO Project Configuration File
+;
+;   Build options: build flags, source filter
+;   Upload options: custom upload port, speed and extra flags
+;   Library options: dependencies, extra library storages
+;   Advanced options: extra scripting
+;
+; Please visit documentation for the other options and examples
+; https://docs.platformio.org/page/projectconf.html
+
+
+[platformio]
+
+; Uncomment only one example to test
+src_dir = examples/{{name}}
+; src_dir = examples/sample2
+
+
+[env:test]
+; 
+platform = espressif32
+framework = arduino
+board = esp32dev
+
+lib_deps = 
+	; use src folder as library
+	file://./src
+	; external library dependencies below
+
+'''
+
 
 def is_valid_name(name):
     # Use regular expression to check if the name is valid
     pattern = re.compile(r'^[a-zA-Z][a-zA-Z0-9_]*$')
     return bool(pattern.match(name))
 
-def create_lib(name, arduino=False, src=False):
+def create_lib(name, arduino=False, src=False, pio=False):
     # Create folder
     folder_path = os.path.join(os.getcwd(), name)
     os.makedirs(folder_path, exist_ok=True)
     
     code_path = folder_path
-    if src:
+    if src or pio:
         code_path = os.path.join(os.getcwd(), f"{name}/src/")
         os.makedirs(code_path, exist_ok=True)
 
@@ -169,7 +201,7 @@ def create_lib(name, arduino=False, src=False):
     header_file_path = os.path.join(code_path, f"{name}.h")
     
     include = ""
-    if arduino:
+    if arduino or pio:
         include = "#include <Arduino.h>\n"
     with open(header_file_path, 'w') as header_file:
         header_file.write(header.replace("{{Name}}", name))
@@ -181,7 +213,7 @@ def create_lib(name, arduino=False, src=False):
         cpp_file.write(header.replace("{{Name}}", name))
         cpp_file.write(cpp_content.replace("{{Name}}", name))
     
-    if arduino:
+    if arduino or pio:
         # Create and write to keywords file
         keywords_file_path = os.path.join(folder_path, f"keywords.txt")
         with open(keywords_file_path, 'w') as keywords_file:
@@ -223,6 +255,10 @@ def create_lib(name, arduino=False, src=False):
         example_file_path = os.path.join(example_path, f"{name.lower()}.ino")
         with open(example_file_path, 'w') as example_file:
             example_file.write(example.replace("{{Name}}", name).replace("{{name}}", name.lower()))
+    if pio:
+        pio_file_path = os.path.join(folder_path, f"platformio.ini")
+        with open(pio_file_path, 'w') as pio_file:
+            pio_file.write(platformio.replace("{{name}}", name.lower()))
 
     print(f"{name} library structure created.")
     print("------------- Success -------------")
@@ -238,12 +274,13 @@ def main():
     parser.add_argument('name', type=str, help='Name for the library')
     parser.add_argument('--arduino', action='store_true', help='Include Arduino support')
     parser.add_argument('--src', action='store_true', help='use src folder')
+    parser.add_argument('--pio', action='store_true', help='add platformio support for testing & development')
 
     args = parser.parse_args()
     
     if is_valid_name(args.name):
         print(f"Generating structure and files for {caps(args.name)}")
-        create_lib(caps(args.name), arduino=args.arduino, src=args.src)
+        create_lib(caps(args.name), arduino=args.arduino, src=args.src, pio=args.pio)
     else:
         print(f"The name '{args.name}' is not valid. Please start with a letter and use only letters, numbers, and underscores.")
 

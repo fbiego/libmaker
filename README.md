@@ -53,4 +53,20 @@ Simply run the script and provide your desired library name. Additionally, you c
 |  |  |- Name.cpp
 ```
 
+`python libmaker.py Name --pio`
+
+```
+|--Name
+|  |--example
+|  |  |--name
+|  |     |- name.ino
+|  |- library.json
+|  |- library.properties
+|  |- keywords.txt
+|  |- platformio.ini
+|  |--src
+|  |  |- Name.h
+|  |  |- Name.cpp
+```
+
 
